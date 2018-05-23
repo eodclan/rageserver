@@ -106,6 +106,46 @@ mp.events.addCommand(
         player.outputChatBox(`Account successfully saved!`);
     }, 
 
+    'wp' : (player, _, weaponName) => {
+        if (player.info.adminLvl < 2) return;
+	if (weaponName.trim().length > 0)
+        	player.giveWeapon(mp.joaat(`weapon_${weaponName}`), 100);
+    	else
+        	player.outputChatBox(`<b>Command syntax:</b> /weapon [weapon_name]`); 
+    },
+
+    'tp' : (player, _, x, y ,z) => {
+        if (player.info.adminLvl < 2) return;
+	if (!isNaN(parseFloat(x)) && !isNaN(parseFloat(y)) && !isNaN(parseFloat(z)))
+        	player.position = new mp.Vector3(parseFloat(x),parseFloat(y),parseFloat(z));
+    	else
+        	player.outputChatBox(`<b>Command syntax:</b> /tp [x] [y] [z]`);
+    },
+
+    'vrep' : (player) => {
+        if (player.info.adminLvl < 1) return;
+	if (player.vehicle)
+        	player.vehicle.repair();
+	else
+        	player.outputChatBox(`<b>Error:</b> you are not in the vehicle!`);
+    },
+
+    'tp2p' : (player, _, playerID) => {
+        if (player.info.adminLvl < 2) return;
+	if (playerID && playerID.trim().length > 0) {
+        let sourcePlayer = mp.players.at(parseInt(playerID));
+        if (sourcePlayer) {
+            let playerPos = sourcePlayer.position;
+            playerPos.x += 1;
+            player.position = playerPos;
+        } else {
+            player.outputChatBox(`<b>Warp:</b> player with such ID not found!`);
+        }
+	} else
+        player.outputChatBox(`<b>Command syntax:</b> /tp2p [player_id]`);
+    },
+	
+	
     'v' : (player, fullText, model) => {  // Temporary vehicle spawning
 		let vehicle = mp.vehicles.new(model, player.position,
 		{
