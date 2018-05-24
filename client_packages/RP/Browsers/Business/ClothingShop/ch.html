@@ -1,15 +1,15 @@
-﻿<html>
+<html>
 	<link rel="stylesheet" href="ch.css">
 	<body>
 		<div id="app">
 			<div class="b1">
-				<div class="item title">Clothing Store №{{ id }}</div>
+				<div class="item title">Bekleidungsgeschäft №{{ id }}</div>
 				<div class="item"></div>
-				<div class="item buttons" v-on:click="showHats">Hats</div>
-				<div class="item buttons" v-on:click="showGlasses">Glasses</div>
-				<div class="item buttons" v-on:click="showTops">Tops</div>
-				<div class="item buttons" v-on:click="showLegs">Legs</div>
-				<div class="item buttons" v-on:click="showFeet">Feet</div>
+				<div class="item buttons" v-on:click="showHats">Hüte</div>
+				<div class="item buttons" v-on:click="showGlasses">Brille</div>
+				<div class="item buttons" v-on:click="showTops">Oberteile</div>
+				<div class="item buttons" v-on:click="showLegs">Hosen</div>
+				<div class="item buttons" v-on:click="showFeet">Schuhe</div>
 				<div class="item"></div>
 				<div v-if="currentTitle">
 					<div class="item title">{{ currentTitle }}</div>
@@ -20,24 +20,24 @@
 					</div>
 					<div class="item b">
 						<div class="arrow l-arrow"  v-on:click="prevColor"><</div>
-						Color {{ currentCloth.color }}
+						Farbe {{ currentCloth.color }}
 						<div class="arrow r-arrow" v-on:click="nextColor">></div>
 					</div>
 						
 						<div class="item b" v-if="currentTitle === 'Tops'">
 						<div class="arrow l-arrow"  v-on:click="prevUnderColor"><</div>
-						Undershirt Color
+						Unterhemd Farbe
 						<div class="arrow r-arrow" v-on:click="nextUnderColor">></div>
 					</div>
 						
 					<div class="item b buy" v-on:click="buy">
-						<div>Buy</div>
+						<div>Kaufen</div>
 						<div>{{ showPrice() }}</div>
 					</div>
 				</div>
 					
 			
-						<div class="item buttons reset" v-on:click="reset">Reset All</div>
+						<div class="item buttons reset" v-on:click="reset">Alles zurücksetzen</div>
 						<div class="item exit" v-on:click="exit">Exit</div>
 				</div>
 			
