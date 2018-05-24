@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 	<link rel="stylesheet" href="business.css">
 	<body>
 		<div id="app">
@@ -6,7 +6,7 @@
       <div class="b1-logo logoLoading" id="logo">
          <div class="logo">
             <img src="../fleeca.png" height="150vh">
-            <div class="b1-tax">tax department</div>
+            <div class="b1-tax">Finanzamt</div>
          </div>
       </div>
    
@@ -17,43 +17,43 @@
          <div class="b2-gs">
             <div class="b2-gs-item" v-if="showBalanceBlock">
                <div class="gs-main gs-dollar-before">{{ showBalance() }}</div>
-               <div class="gs-info">balance</div>
+               <div class="gs-info">Balance</div>
             </div>
             <div class="b2-gs-item">
                <div class="gs-main gs-dollar-before">{{ showPrice() }}</div>
-               <div class="gs-info">price</div>
+               <div class="gs-info">Preis</div>
             </div>
             <div class="b2-gs-item">
                <div class="gs-main">{{ showOwner() }}</div>
-               <div class="gs-info">owner</div>
+               <div class="gs-info">Inhaber</div>
             </div>
             <div class="b2-gs-item ">
                <div class="gs-main gs-dollar-before">{{ showTax() }}</div>
-               <div class="gs-info">tax</div>
+               <div class="gs-info">MwSt</div>
             </div>
             <div class="b2-gs-item" v-if="showMarginBlock">
                <div class="gs-main gs-percent-after">{{ margin }}</div>
-               <div class="gs-info">margin</div>
+               <div class="gs-info">Spanne</div>
             </div>
          </div>
    
          <div class="b2-buttons">
             <div class="b2-button" v-if="showBuyBtn" v-on:click="changeBuyConfirms">
-               <div class="b2-cb b2-cb_left" v-if="showBuyConfirms">X</div>Buy business
+               <div class="b2-cb b2-cb_left" v-if="showBuyConfirms">X</div>Geschäft kaufen
                <div class="b2-cb b2-cb_right" v-if="showBuyConfirms" v-on:click="buy">V</div>
             </div>
             <div class="b2-button" v-if="showSellBtn" v-on:click="changeSellConfirms">
-               <div class="b2-cb b2-cb_left" v-if="showSellConfirms">X</div>Sell business
+               <div class="b2-cb b2-cb_left" v-if="showSellConfirms">X</div>Geschäft verkaufen
                <div class="b2-cb b2-cb_right" v-if="showSellConfirms" v-on:click="sell">V</div>
             </div>
             <div class="b2-button" v-if="showMarginBtn">
                <div class="b2-cb b2-cb_left" v-on:click="changeMargin(-10)">- 10</div>
-               <div class="b2-cb b2-cb_left" style="left: 7vh;" v-on:click="changeMargin(-1)">- 1</div>Change Margin
+               <div class="b2-cb b2-cb_left" style="left: 7vh;" v-on:click="changeMargin(-1)">- 1</div>Spanne ändern
                <div class="b2-cb b2-cb_right" style="right: 7vh;" v-on:click="changeMargin(1)">+ 1</div>
                <div class="b2-cb b2-cb_right" v-on:click="changeMargin(10)">+ 10</div>
             </div>
             <div class="b2-button" v-if="showBalanceBtn" v-on:click="takeBalanceMoney">
-               Take all money from balance account
+               Nimm alles Geld vom Konto.
             </div>
          </div>
       </div>
