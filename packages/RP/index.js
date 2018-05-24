@@ -7,5 +7,7 @@ require('./Basic/sWeather');
 require('./Character/sCharacterCreator');
 require('./Character/sClothes');
 require('./Jobs/sOrangeCollector');
+require('./Jobs/sWoodCollector');
+require('./Jobs/sWineCollector');
 require('./Business/sBusiness');
 require('./Business/sClothingShop');

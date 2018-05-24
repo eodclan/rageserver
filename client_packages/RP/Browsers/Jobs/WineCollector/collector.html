@@ -1,0 +1,46 @@
+﻿<html>
+	<link rel="stylesheet" href="collector.css">
+	<body>
+		<div id="app">
+      <div class="b3-close" v-on:click="exit">X</div>
+    
+      <div class="message">
+        Willkommen bei der Weinfarm Wine Punch! <br> <br> Das Sammeln und Verpacken von Wein wird manuell gemacht, deshalb werden Zehntausende von temporären Arbeitsplätzen geöffnet. <br> <br> Diese Arbeit erfordert keine besonderen Kenntnisse oder Fähigkeiten körperliche Ausdauer. <br> <br> Wenn Sie in guter körperlicher Verfassung sind, dann laden wir Sie ein, auf unserer Weinfarm zu arbeiten.
+      </div>
+    
+      <div class="buttons" id="app">
+        <div class="button" v-if="start" v-on:click="startWork">Job annehmen!</div>
+        <div class="button" v-if="finish" v-on:click="finishWork">Job kündigen</div>
+      </div>
+    </div>    
+		<script src="../../vue.js"></script>
+	</body>
+</html>
+
+
+<script>
+const app = new Vue({
+  el: '#app',
+  data: {
+    start: true,
+    finish: false,
+  },
+  methods: {
+    loadFinish: function() {
+      this.start = false;
+      this.finish = true;
+    },
+    startWork: function() {
+      this.exit();
+      mp.trigger("cWineCollectorStartWork");
+    },
+    finishWork: function() {
+      this.exit();
+      mp.trigger("cWineCollectorFinishWork");
+    },
+    exit: function() {
+      mp.trigger("cCloseCef");
+    },
+  }
+});
+</script>

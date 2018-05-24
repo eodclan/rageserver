@@ -195,5 +195,40 @@ CreateATM(-254.56, 6338.20, 32.42); // hospital
 CreateATM(155.828, 6642.827, 31.602); // petrolstation with customs
 CreateATM(174.161, 6637.827, 31.573); // petrolstation with customs
 CreateATM(1701.28, 6426.46, 32.76); // petrolstation
-
+CreateATM(-386.816, 6046.031, 31.502); // sherriff
+CreateATM(2683.132, 3286.739, 55.241); // shop
+CreateATM(1702.736, 4933.596, 42.064); // shop
+CreateATM(-132.967, 6366.445, 31.475); // shop
+CreateATM(-283.024, 6226.01, 31.493); // shop
+CreateATM(119.044, -883.928, 31.123); // shop
+CreateATM(24.403, -945.994, 29.358); // shop
+CreateATM(5.183, -919.858, 29.558); // shop
+CreateATM(-3240.933, 997.656, 12.55); // normal
+CreateATM(-3240.615, 1008.511, 12.831); // shop
+CreateATM(-3044.012, 594.831, 7.737); // normal
+CreateATM(-3040.86, 593.082, 7.909); // shop
+CreateATM(147.483, -1035.644, 29.343); // normal
+CreateATM(-2975.107, 380.143, 14.999); // normal
+CreateATM(295.726, -895.955, 29.215); // normal
+CreateATM(296.508, -893.821, 29.232); // normal
+CreateATM(-2072.424, -317.043, 13.316); // normal
+CreateATM(-1314.806, -836.086, 16.96); // normal
+CreateATM(-1315.889, -834.565, 16.962); // normal
+CreateATM(289.106, -1256.872, 29.441); // normal
+CreateATM(-1109.373, -1690.819, 4.375); // normal
+CreateATM(288.75, -1282.301, 29.642); // normal
+CreateATM(-821.631, -1082.003, 11.132); // normal
+CreateATM(-56.918, -1752.176, 29.421); // normal
+CreateATM(-717.614, -915.864, 19.216); // normal
+CreateATM(112.641, -819.372, 31.338); // normal
+CreateATM(111.427, -775.402, 31.437); // normal
+CreateATM(-203.85, -861.401, 30.268); // normal
+CreateATM(-57.86, -92.967, 57.791); // normal
+CreateATM(-537.67, -854.41, 29.302); // normal
+CreateATM(158.645, 234.112, 106.626); // normal
+CreateATM(238.265, 234.112, 106.287); // normal
+CreateATM(237.314, 217.927, 106.287); // normal
+CreateATM(236.522, 219.628, 106.287); // normal
+CreateATM(285.476, 143.485, 104.173); // normal
+CreateATM(356.883, 173.482, 103.069); // normal
 

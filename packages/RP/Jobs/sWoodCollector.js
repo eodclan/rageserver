@@ -7,36 +7,22 @@ const clothes = require('../Character/sClothes');
 const treeMarkersList = [];
 let menuShape, dropMarker, dropShape;
 const checkPoints = [
-    {x: 378.583, y: 6517.85, z: 27.7 },
-    {x: 378.304, y: 6506.14, z: 27.7 },
-    {x: 370.188, y: 6506.349, z: 27.7 },
-    {x: 370.455, y: 6517.792, z: 27.7 },
-    {x: 368.892, y: 6531.863, z: 27.7 },
-    {x: 362.015, y: 6531.501, z: 27.7 },
-    {x: 363.063, y: 6517.922, z: 27.7 },
-    {x: 363.256, y: 6506.289, z: 27.7 },
-    {x: 354.857, y: 6504.864, z: 27.7 },
-    {x: 355.179, y: 6516.821, z: 27.7 },
-    {x: 354.111, y: 6530.424, z: 27.7 },
-    {x: 345.973, y: 6530.799, z: 27.7 },
-    {x: 347.625, y: 6517.124, z: 27.7 },
-    {x: 348.232, y: 6505.646, z: 27.7 },
-    {x: 340.024, y: 6505.893, z: 27.7 },
-    {x: 338.755, y: 6517.642, z: 27.7 },
-    {x: 338.543, y: 6530.713, z: 27.7 },
-    {x: 329.836, y: 6531.433, z: 27.7 },
-    {x: 329.830, y: 6517.543, z: 27.7 },
-    {x: 330.540, y: 6506.052, z: 27.7 },
-    {x: 321.837, y: 6504.873, z: 27.7 },
-    {x: 321.420, y: 6517.296, z: 27.7 },
-    {x: 321.355, y: 6530.995, z: 27.7 },
+    {x: -616.344, y: 5511.083, z: 50.864 },
+    {x: -611.316, y: 5516.442, z: 50.324 },
+    {x: -606.707, y: 5522.907, z: 50.83 },
+    {x: -607.608, y: 5530.482, z: 48.188 },
+    {x: -616.371, y: 5533.794, z: 46.868 },
+    {x: -622.829, y: 5527.078, z: 47.131 },
+    {x: -629.636, y: 5521.292, z: 47.515 },
+    {x: -625.256, y: 5515.387, z: 50.568 },
+    {x: -617.013, y: 5518.762, z: 53.669 },
 ];
 
 
 
 function createEntities() {
-	const mainMenu =  {x: 405.676, y: 6526.119, z: 27.709};
-    const posToDrop = {x: 331.74, y: 6541.576, z: 28.417};
+	const mainMenu =  {x: -605.798, y: 5496.809, z: 52.167};
+    const posToDrop = {x: -623.481, y: 5503.517, z: 51.205};
 	
 	// mainMenu
 	const menuMarker = mp.markers.new(1, new mp.Vector3(mainMenu.x, mainMenu.y, mainMenu.z - 1), 0.75,
@@ -46,9 +32,9 @@ function createEntities() {
 	});
 	menuShape = mp.colshapes.newSphere(mainMenu.x, mainMenu.y, mainMenu.z, 1);
 
-	const blip = mp.blips.new(501, new mp.Vector3(mainMenu.x, mainMenu.y, mainMenu.z),
+	const blip = mp.blips.new(527, new mp.Vector3(mainMenu.x, mainMenu.y, mainMenu.z),
 	{	
-        name: "Orange Sammler Job",
+        name: "Holz Sammler Job",
 		shortRange: true,
 		scale: 0.7,
 		color: 17,
@@ -69,29 +55,29 @@ function createEntities() {
 			color: [255, 165, 0, 50],
 			visible: false,
         });
-        marker.orangeCollectorTree = i;
+        marker.WoodCollectorTree = i;
 		treeMarkersList.push(marker);
         const colshape = mp.colshapes.newSphere(checkPoints[i].x, checkPoints[i].y, checkPoints[i].z, 3);
-        colshape.orangeCollectorTree = i;
+        colshape.WoodCollectorTree = i;
     }
 }
 
 function openMainMenu(player) {
-    if (player.info.activeJob.name === "Orange Collector") {
-        return player.call("cOrangeCollectorFinishCef", ['app.loadFinish();']);
+    if (player.info.activeJob.name === "Wood Collector") {
+        return player.call("cWoodCollectorFinishCef", ['app.loadFinish();']);
     }
-    player.call("cOrangeCollectorStartCef");
+    player.call("cWoodCollectorStartCef");
 }
 
 function startWork(player) {
     player.info.activeJob = {
-        name: "Orange Collector",
+        name: "Wood Collector",
         collected: 0,
         activeTree: false,
     };
     createRandomCheckPoint(player);
-    player.notify("~g~Du hast den orangenen Sammlerjob begonnen!");
-    misc.log.debug(`${player.name} started orange collector job!`);
+    player.notify("~g~Du hast den Holz Sammlerjob begonnen!");
+    misc.log.debug(`${player.name} started Wood collector job!`);
     dropMarker.showFor(player);
     if (player.model === 1885233650) {
 		setWorkingClothesForMan(player);
@@ -131,12 +117,12 @@ function createRandomCheckPoint(player) {
 function enteredTreeShape(player) {
     player.stopAnimation();
     player.info.activeJob.collected += misc.getRandomInt(1, 2);
-    player.notify(`You have ~g~${player.info.activeJob.collected} ~w~oranges in your bucket!`);
+    player.notify(`Du hast ~g~${player.info.activeJob.collected} ~w~Holz in deinem Rucksack!`);
     if (player.info.activeJob.collected < 20) {
         return createRandomCheckPoint(player);
     }
     hideActiveCheckPoint(player);
-    player.notify("~g~Dein Eimer ist voll! Bring es zum Trailer!");
+    player.notify("~g~Dein Rucksack ist voll! Bring es zum Stellplatz!");
 }
 
 
@@ -151,7 +137,7 @@ function hideActiveCheckPoint(player) {
 function enteredDropShape(player) {
     player.stopAnimation();
     if (player.info.activeJob.collected === 0) {
-        return player.notify(`Dein Eimer ist leer!`);
+        return player.notify(`Dein Rucksack ist leer!`);
     }
     const earnedMoney = player.info.activeJob.collected * 5;
     moneyAPI.changeMoney(player, earnedMoney);
@@ -169,7 +155,7 @@ function finishWork(player) {
         name: false,
     };
     player.notify("~g~Du hast den Job beendet!");
-    misc.log.debug(`${player.name} finished orange collector job!`);
+    misc.log.debug(`${player.name} finished Wood collector job!`);
     dropMarker.hideFor(player);
     clothes.loadPlayerClothes(player);
 }
@@ -182,14 +168,14 @@ mp.events.add(
     "playerEnterColshape" : (player, shape) => {
         if (player.vehicle || !player.info) return;
         if (shape === menuShape) {
-            player.info.canOpen.orangeCollector = true;
+            player.info.canOpen.WoodCollector = true;
             player.notify(`Benutzen Sie ~b~ E ~s~, um den Job zu betreten`);
         }
-        else if (player.info.activeJob.name === "Orange Collector" && shape.orangeCollectorTree === player.info.activeJob.activeTree) {
+        else if (player.info.activeJob.name === "Wood Collector" && shape.WoodCollectorTree === player.info.activeJob.activeTree) {
             player.playAnimation('anim@mp_snowball', 'pickup_snowball', 1, 47);
             setTimeout(enteredTreeShape, 2400, player);
         }
-        else if (shape === dropShape && player.info.activeJob.name === "Orange Collector") {
+        else if (shape === dropShape && player.info.activeJob.name === "Wood Collector") {
             player.playAnimation('anim@mp_snowball', 'pickup_snowball', 1, 47);
             setTimeout(enteredDropShape, 2400, player);
         }
@@ -197,23 +183,23 @@ mp.events.add(
 
     "playerExitColshape" : (player, shape) => {
         if (shape === menuShape) {
-            return player.info.canOpen.orangeCollector = false;
+            return player.info.canOpen.WoodCollector = false;
         }
     },
     
     "sKeys-E" : (player) => {
-        if (!player.info || !player.info.loggedIn || !player.info.canOpen.orangeCollector) return;
-        if (player.info.activeJob.name && player.info.activeJob.name !== "Orange Collector") {
+        if (!player.info || !player.info.loggedIn || !player.info.canOpen.WoodCollector) return;
+        if (player.info.activeJob.name && player.info.activeJob.name !== "Wood Collector") {
             return player.nofity("Du arbeitest bereits an einem Job!");
         }
         openMainMenu(player);
     },
 
-    "sOrangeCollectorStartWork" : (player) => {
+    "sWoodCollectorStartWork" : (player) => {
         startWork(player);
     },
 
-    "sOrangeCollectorFinishWork" : (player) => {
+    "sWoodCollectorFinishWork" : (player) => {
         finishWork(player);
     },
 
