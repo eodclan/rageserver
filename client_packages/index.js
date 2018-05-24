@@ -7,3 +7,4 @@ require('./RP/Character/cClothes.js');
 require('./RP/Jobs/cOrangeCollector.js');
 require('./RP/Business/cBusiness.js');
 require('./RP/Business/cClothingShop.js');
+require('./RP/cDoors.js');
