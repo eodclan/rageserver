@@ -5,6 +5,18 @@ const charCreator = require('../Character/sCharacterCreator');
 const clothes = require('../Character/sClothes');
 const crypto = require('crypto');
 
+// Respawn Vector3 Details from Player Death 
+const hospitalCoords = [
+    new mp.Vector3(340.6430969238281, -1396.09228515625, 32.50926971435547),
+    new mp.Vector3(-450.0058288574219, -340.5953369140625, 34.50172805786133),
+    new mp.Vector3(360.2090148925781, -585.2518920898438, 28.821245193481445),
+    new mp.Vector3(1839.369140625, 3672.39794921875, 34.27670669555664),
+    new mp.Vector3(-242.74436950683594, 6325.830078125, 32.426185607910156)
+];
+
+// milliseconds from playerDeath
+const respawnTime = 8000; 
+
 
 function hashPassword(str) {
     const cipher = crypto.createCipher('aes192', 'a pass');
@@ -30,6 +42,28 @@ function showLoginCef(player) {
 function showRegisterCef(player) {
     player.call("cShowLoginCef", ["package://RP/Browsers/Login/register.html"]);
 }
+
+function respawnAtHospital(player) {
+    let closestHospital = 0;
+    let minDist = 9999.0;
+
+    for (let i = 0, max = hospitalCoords.length; i < max; i++) {
+        let dist = player.dist(hospitalCoords[i]);
+        if (dist < minDist) {
+            minDist = dist;
+            closestHospital = i;
+        }
+    }
+
+    player.spawn(hospitalCoords[closestHospital]);
+    player.health = 100;
+
+    savePlayerAccount(player);
+
+    clearTimeout(player.respawnTimer);
+    player.respawnTimer = null;
+}
+
 
 mp.events.add(
 {
@@ -92,9 +126,10 @@ mp.events.add(
     },
 
     "playerDeath" : (player, reason, killer) => { // Temporary Respawn;
-        player.spawn(new mp.Vector3(player.position));
-        player.health = 90;
+	if (player.respawnTimer) clearTimeout(player.respawnTimer);
+	player.respawnTimer = setTimeout(respawnAtHospital, respawnTime, player);
     },
+
 
 });
 
