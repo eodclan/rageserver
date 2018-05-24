@@ -1,16 +1,16 @@
-﻿<html>
+<html>
 	<link rel="stylesheet" href="collector.css">
 	<body>
 		<div id="app">
       <div class="b3-close" v-on:click="exit">X</div>
     
       <div class="message">
-        Welcome to Donkey Punch Family Farm!<br><br> Collecting and packing of oranges is made manually, therefore tens of thousands of temporary workplaces are opened.<br><br> Such work does not require any special knowledge or skills, only physical endurance.<br><br>    If you like the sweet and heady scent of oranges, and you are in good physical shape - we invite you to work in our farm.
+        Willkommen bei der Familienfarm Donkey Punch! <br> <br> Das Sammeln und Verpacken von Orangen wird manuell gemacht, deshalb werden Zehntausende von temporären Arbeitsplätzen geöffnet. <br> <br> Diese Arbeit erfordert keine besonderen Kenntnisse oder Fähigkeiten körperliche Ausdauer. <br> <br> Wenn Sie den süßen und berauschenden Duft von Orangen mögen, und Sie sind in guter körperlicher Verfassung - wir laden Sie ein, auf unserem Bauernhof zu arbeiten.
       </div>
     
       <div class="buttons" id="app">
-        <div class="button" v-if="start" v-on:click="startWork">Start Work!</div>
-        <div class="button" v-if="finish" v-on:click="finishWork">Finish Work!</div>
+        <div class="button" v-if="start" v-on:click="startWork">Job annehmen!</div>
+        <div class="button" v-if="finish" v-on:click="finishWork">Job kündigen</div>
       </div>
     </div>    
 		<script src="../../vue.js"></script>
