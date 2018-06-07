@@ -1,16 +1,17 @@
-<html>
+﻿<html>
 	<link rel="stylesheet" href="register.css">
 	<body>
 		<div class="b-pos">
 			<div class="b">
-			<div class="b_title">Willkommen bei [SET_YOUR_NAME]!</div>
+			<div class="b_title">Herzlich willkommen!</div>
 			<div class="b_mess">
 				Bitte geben Sie Ihr Passwort ein.
 			</div>
-			<input type="password" id="password" class="b_input" autofocus>
-			<div class="b_reg-button" onclick="Loguser();">Einloggen</div>
-				<div class="b_reg-button b_reg-button_green" id="success">Erfolg! Kontodaten werden geladen...</div>
+			<input type="text" id="password" class="b_input" autofocus>
+			<div class="b_reg-button" onclick="Loguser();">Log in</div>
+				<div class="b_reg-button b_reg-button_green" id="success">Erfolgreich! Kontodaten werden geladen ...</div>
 				<div class="b_reg-button b_reg-button_red" id="error">Error! Falsches Passwort!</div>
+				<div class="b_reg-button b_reg-button_red" id="defNameError">Scheint, dass Sie den Standardnamen nicht geändert haben</div>
 			</div>
 		</div>
 	</body>
@@ -59,6 +60,16 @@ function showSuccess() {
 
 function hideSuccess() {
 	success.style.display = "none";
+}
+
+
+function showDefNameError() {
+	defNameError.style.display = "block";
+	setTimeout(hideDefNameError, 2000);
+}
+
+function hideDefNameError() {
+	defNameError.style.display = "none";
 }
 
 </script>

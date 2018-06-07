@@ -4,7 +4,7 @@ const misc = require('../sMisc');
 
 
 const manHats = [	
-	{	id: 8, 	name: "Ohne Hut",color: 0, colors: [0], 							price: 0,  },
+	{	id: 8, 	name: "Without Hat",color: 0, colors: [0], 							price: 0,  },
 	{	id: 2, 	name: "Cap", 		color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7], 	price: 500,  },
 	{	id: 3, 	name: "Panama", 	color: 0, colors: [1, 2], 						price: 600,  },
 	{	id: 4, 	name: "LS Cap", 	color: 0, colors: [0, 1], 						price: 1000,  },
@@ -14,30 +14,30 @@ const manHats = [
 exports.manHats = manHats;
 
 const manGlasses = [	
-	{	id: 0, name: "Ohne Brille", color: 0, colors: [0], 									price: 0,  },
-	{	id: 1, name: "Brille №1", 		color: 0, colors: [1], 									price: 500,  },
-	{	id: 2, name: "Brille №2", 		color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 	price: 450,  },
+	{	id: 0, name: "Without Glasses", color: 0, colors: [0], 									price: 0,  },
+	{	id: 1, name: "Glasses №1", 		color: 0, colors: [1], 									price: 500,  },
+	{	id: 2, name: "Glasses №2", 		color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 	price: 450,  },
 ];
 exports.manGlasses = manGlasses;
 
 const manTops = [	
-	{	id: 0, name: "Einfaches T-Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 7, 8, 11], price: 650, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 		},
-	{	id: 1, name: "Einfaches T-Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14], price: 550, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 		},
-	{	id: 5, name: "Unterhemd", color: 0, colors: [0, 1, 2, 7], price: 350, torso: 5, undershirt: 15, underColor: 0, underColors: [0], 	},
-	{	id: 8, name: "Hemd", color: 0, colors: [0, 10, 13, 14], price: 700, torso: 8, undershirt: 15, underColor: 0, underColors: [0], 	},
-	{	id: 13, name: "Hemd", color: 0, colors: [0, 1, 2, 3, 5, 13], price: 800, torso: 11, undershirt: 15, underColor: 0, underColors: [0], 	},
-	{	id: 14, name: "Hemd", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], price: 950, torso: 12, undershirt: 15, underColor: 0, underColors: [0], 	},
+	{	id: 0, name: "Simple T-Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 7, 8, 11], price: 650, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 		},
+	{	id: 1, name: "Simple T-Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14], price: 550, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 		},
+	{	id: 5, name: "Undershirt", color: 0, colors: [0, 1, 2, 7], price: 350, torso: 5, undershirt: 15, underColor: 0, underColors: [0], 	},
+	{	id: 8, name: "Shirt", color: 0, colors: [0, 10, 13, 14], price: 700, torso: 8, undershirt: 15, underColor: 0, underColors: [0], 	},
+	{	id: 13, name: "Shirt", color: 0, colors: [0, 1, 2, 3, 5, 13], price: 800, torso: 11, undershirt: 15, underColor: 0, underColors: [0], 	},
+	{	id: 14, name: "Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], price: 950, torso: 12, undershirt: 15, underColor: 0, underColors: [0], 	},
 	{	id: 16, name: "T-Shirt", color: 0, colors: [0, 1, 2], price: 600, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 	},
 	{	id: 17, name: "Undershirt", color: 0, colors: [0, 1, 2, 3, 4, 5], price: 700, torso: 5, undershirt: 15, underColor: 0, underColors: [0], 	},
-	{	id: 18, name: "Farbiges Hemd", color: 0, colors: [0, 1, 2, 3], price: 900, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 	},
+	{	id: 18, name: "Colored Shirt", color: 0, colors: [0, 1, 2, 3], price: 900, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 	},
 
 	
 ];
 exports.manTops = manTops;
 
 const manLegs = [	
-	{	id: 0, name: "Passende Jeans", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 	price: 750,  },
-	{	id: 1, name: "Breite Jeans", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 	price: 1000,  },
+	{	id: 0, name: "Fit Jeans", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 	price: 750,  },
+	{	id: 1, name: "Wide Jeans", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 	price: 1000,  },
 ];
 exports.manLegs = manLegs;
 
@@ -60,25 +60,25 @@ const womanHats = [
 exports.womanHats = womanHats;
 
 const womanGlasses = [	
-	{	id: 13, name: "Ohne Brille", color: 0, colors: [0], 										price: 0,  },
-	{	id: 0, name: "Brille №1", 		color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 		price: 500,  },
-	{	id: 21, name: "Brille №2", 	color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 		price: 450,  },
+	{	id: 13, name: "Without Glasses", color: 0, colors: [0], 										price: 0,  },
+	{	id: 0, name: "Glasses №1", 		color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 		price: 500,  },
+	{	id: 21, name: "Glasses №2", 	color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 		price: 450,  },
 ];
 exports.womanGlasses = womanGlasses;
 
 const womanTops = [	
-	{	id: 0, name: "Einfaches T-Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], price: 500, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 		},
-	{	id: 2, name: "Einfaches T-Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], price: 650, torso: 2, undershirt: 15, underColor: 0, underColors: [0], 		},
+	{	id: 0, name: "Simple T-Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], price: 500, torso: 0, undershirt: 15, underColor: 0, underColors: [0], 		},
+	{	id: 2, name: "Simple T-Shirt", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], price: 650, torso: 2, undershirt: 15, underColor: 0, underColors: [0], 		},
 	{	id: 3, name: " Jersey", color: 0, colors: [0, 1, 2, 3, 4, 10, 11, 12, 13, 14], price: 750, torso: 3, undershirt: 15, underColor: 0, underColors: [0], 		},
-	{	id: 4, name: " Sport Unterhemd", color: 0, colors: [13, 14], price: 450, torso: 4, undershirt: 15, underColor: 0, underColors: [0], 		},
-	{	id: 5, name: " Sport Unterhemd", color: 0, colors: [0, 1, 7, 9], price: 450, torso: 4, undershirt: 15, underColor: 0, underColors: [0], 		},
+	{	id: 4, name: " Sport Undershirt", color: 0, colors: [13, 14], price: 450, torso: 4, undershirt: 15, underColor: 0, underColors: [0], 		},
+	{	id: 5, name: " Sport Undershirt", color: 0, colors: [0, 1, 7, 9], price: 450, torso: 4, undershirt: 15, underColor: 0, underColors: [0], 		},
 		
 ];
 exports.womanTops = womanTops;
 
 const womanLegs = [	
-	{	id: 0, name: "Passende Jeans", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 	price: 750,  },
-	{	id: 1, name: "Breite Jeans", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 	price: 1000,  },
+	{	id: 0, name: "Fit Jeans", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 	price: 750,  },
+	{	id: 1, name: "Wide Jeans", color: 0, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 	price: 1000,  },
 ];
 exports.womanLegs = womanLegs;
 

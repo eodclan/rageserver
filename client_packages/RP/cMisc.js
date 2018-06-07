@@ -12,6 +12,10 @@ function prettify(num) {
 }
 exports.prettify = prettify;
 
+function roundNum(number, ends = 0) {
+	return parseFloat(number.toFixed(ends));
+}
+exports.roundNum = roundNum;
 
 // CEF //
 function prepareToCef(blurred = null) {
@@ -24,11 +28,13 @@ function prepareToCef(blurred = null) {
 }
 exports.prepareToCef = prepareToCef;
 
-function openCef(url) {
+function openCef(url, lang = "eng") {
 	if (cef) {
 		cef.destroy(); 
 	}
 	cef = mp.browsers.new(url);
+	if (lang === "rus") injectCef("loadRusLang();");
+	if (lang === "ger") injectCef("loadGerLang();");
 }
 exports.openCef = openCef;
 

@@ -4,18 +4,7 @@ const misc = require('../sMisc');
 const charCreator = require('../Character/sCharacterCreator');
 const clothes = require('../Character/sClothes');
 const crypto = require('crypto');
-
-// Respawn Vector3 Details from Player Death 
-const hospitalCoords = [
-    new mp.Vector3(340.6430969238281, -1396.09228515625, 32.50926971435547),
-    new mp.Vector3(-450.0058288574219, -340.5953369140625, 34.50172805786133),
-    new mp.Vector3(360.2090148925781, -585.2518920898438, 28.821245193481445),
-    new mp.Vector3(1839.369140625, 3672.39794921875, 34.27670669555664),
-    new mp.Vector3(-242.74436950683594, 6325.830078125, 32.426185607910156)
-];
-
-// milliseconds from playerDeath
-const respawnTime = 8000; 
+const vehicleAPI = require('./sVehicle');
 
 
 function hashPassword(str) {
@@ -31,7 +20,8 @@ function showSuccess(player) {
 }
 
 function showError(player) {
-    const str = "showError();";
+    let str = "showError();";
+    if (player.name === "WeirdNewbie") str += "showDefNameError();"
     player.call("cInjectCef", [str]);
 }
 
@@ -43,34 +33,12 @@ function showRegisterCef(player) {
     player.call("cShowLoginCef", ["package://RP/Browsers/Login/register.html"]);
 }
 
-function respawnAtHospital(player) {
-    let closestHospital = 0;
-    let minDist = 9999.0;
-
-    for (let i = 0, max = hospitalCoords.length; i < max; i++) {
-        let dist = player.dist(hospitalCoords[i]);
-        if (dist < minDist) {
-            minDist = dist;
-            closestHospital = i;
-        }
-    }
-
-    player.spawn(hospitalCoords[closestHospital]);
-    player.health = 100;
-
-    savePlayerAccount(player);
-
-    clearTimeout(player.respawnTimer);
-    player.respawnTimer = null;
-}
-
-
 mp.events.add(
 {
     "playerReady" : async (player) => {
         player.spawn(new mp.Vector3(3222, 5376, 20));
         player.dimension = 1001;
-        const d = await misc.query(`SELECT username, password FROM users WHERE username = '${player.name}'`);
+        const d = await misc.query(`SELECT username, password FROM users WHERE username = '${player.name}' LIMIT 1`);
         if (!d[0]) {
             showRegisterCef(player);
         }
@@ -79,6 +47,7 @@ mp.events.add(
             player.info = d[0];
         }
         misc.log.debug(`${player.name} connected`);
+        player.outputChatBox(`Please, dont use non-standart chars in your username`);
     },
         
     "sTryRegister" : async (player, pass) => {
@@ -117,6 +86,7 @@ mp.events.add(
         await loadPlayerAccount(player);
         await charCreator.loadPlayerAppearance(player);
         await clothes.loadPlayerClothes(player);
+        await vehicleAPI.loadPlayerVehicles(player);
         misc.log.debug(`${player.name} logged in`);
     },
     
@@ -126,10 +96,9 @@ mp.events.add(
     },
 
     "playerDeath" : (player, reason, killer) => { // Temporary Respawn;
-	if (player.respawnTimer) clearTimeout(player.respawnTimer);
-	player.respawnTimer = setTimeout(respawnAtHospital, respawnTime, player);
+        player.spawn(new mp.Vector3(player.position));
+        player.health = 90;
     },
-
 
 });
 
@@ -140,58 +109,7 @@ mp.events.addCommand(
         savePlayerAccount(player);
         player.outputChatBox(`Account successfully saved!`);
     }, 
-
-    'wp' : (player, _, weaponName) => {
-        if (player.info.adminLvl < 2) return;
-	if (weaponName.trim().length > 0)
-        	player.giveWeapon(mp.joaat(`weapon_${weaponName}`), 100);
-    	else
-        	player.outputChatBox(`<b>Command syntax:</b> /weapon [weapon_name]`); 
-    },
-
-    'tp' : (player, _, x, y ,z) => {
-        if (player.info.adminLvl < 2) return;
-	if (!isNaN(parseFloat(x)) && !isNaN(parseFloat(y)) && !isNaN(parseFloat(z)))
-        	player.position = new mp.Vector3(parseFloat(x),parseFloat(y),parseFloat(z));
-    	else
-        	player.outputChatBox(`<b>Command syntax:</b> /tp [x] [y] [z]`);
-    },
-
-    'vrep' : (player) => {
-        if (player.info.adminLvl < 1) return;
-	if (player.vehicle)
-        	player.vehicle.repair();
-	else
-        	player.outputChatBox(`<b>Error:</b> you are not in the vehicle!`);
-    },
-
-    'tp2p' : (player, _, playerID) => {
-        if (player.info.adminLvl < 2) return;
-	if (playerID && playerID.trim().length > 0) {
-        let sourcePlayer = mp.players.at(parseInt(playerID));
-        if (sourcePlayer) {
-            let playerPos = sourcePlayer.position;
-            playerPos.x += 1;
-            player.position = playerPos;
-        } else {
-            player.outputChatBox(`<b>Warp:</b> player with such ID not found!`);
-        }
-	} else
-        player.outputChatBox(`<b>Command syntax:</b> /tp2p [player_id]`);
-    },
-	
-	
-    'v' : (player, fullText, model) => {  // Temporary vehicle spawning
-		let vehicle = mp.vehicles.new(model, player.position,
-		{
-            heading: player.heading,
-        });
-        const color = misc.getRandomInt(0, 159);
-        vehicle.setColor(color, color);
-        player.putIntoVehicle(vehicle, -1);
-        misc.log.debug(`${player.name} spawned ${model}`);
-    },
-    
+ 
     'pos' : (player, fullText, model) => { 
         if (player.info.adminLvl < 1) return;
         const pos = player.position;
@@ -205,7 +123,16 @@ mp.events.addCommand(
         const str = `x: ${misc.roundNum(pos.x, 3)}, y: ${misc.roundNum(pos.y, 3)}, z: ${misc.roundNum(pos.z, 3)}, rot: ${misc.roundNum(rot, 2)}`;
         player.outputChatBox(str);
         misc.log.debug(str);
-	},
+    },
+    
+    'setlang' : (player, fullText, lang) => { 
+		if (lang !== "eng" && lang !== "rus" && lang !== "ger") {
+            return player.outputChatBox("Server does not support your language! Available languages: eng, rus, ger.");
+        }
+        player.notify(`Current language: ~g~${lang}`);
+        misc.query(`UPDATE users SET lang = '${lang}' WHERE username = '${player.name}'`);
+        player.info.lang = lang;
+    },
     
 });       
     
@@ -213,11 +140,12 @@ mp.events.addCommand(
 function savePlayerAccount(player) {
     const position = misc.convertOBJToJSON(player.position, player.heading, 0.1);
     misc.query(`UPDATE users SET position = '${position}', dim = '${player.dimension}', lastlogindate = '${new Date()}' WHERE username = '${player.name}'`);
+    vehicleAPI.savePlayerVehicles(player.name);
     misc.log.debug(`${player.name} disconnected`);
 }
 
 async function loadPlayerAccount(player) {
-    const d = await misc.query(`SELECT * FROM users WHERE username = '${player.name}'`);
+    const d = await misc.query(`SELECT * FROM users WHERE username = '${player.name}' LIMIT 1`);
     player.info = {
         loggedIn: true,
         id: d[0].id,
@@ -232,9 +160,12 @@ async function loadPlayerAccount(player) {
             name: false,
         },
         hasBusiness: d[0].hasBusiness,
+        lang: d[0].lang,
     }
     misc.setPlayerPosFromJSON(player, d[0].position);
     player.dimension = d[0].dim;
     player.call("cMoneyUpdate", [d[0].money]);
     player.call("cCloseCefAndDestroyCam");
+    player.outputChatBox("Choose your language: /setlang [language]! Available languages: eng, rus.");
+    player.outputChatBox("Spawn a vehicle: /v [model]. E.g. /v neon");
 }

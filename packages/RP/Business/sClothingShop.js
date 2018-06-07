@@ -9,27 +9,14 @@ const moneyAPI = require('../Basic/sMoney');
 class clothingShop extends business {
     constructor(d) {
 		super(d);
-		this.buyerMenuCoord = JSON.parse(d.buyerMenuCoord);
 		this.camData = JSON.parse(d.camData);
 		this.buyerStandCoord = d.buyerStandCoord;
     }
 	
-	createSpecialEntities() {
-		const pos = this.buyerMenuCoord;
-		const marker = mp.markers.new(1, new mp.Vector3(pos.x, pos.y, pos.z - 1), 0.75,
-		{
-			color: [93, 182, 229, 25],
-		});
-		
-		const colshape = mp.colshapes.newSphere(pos.x, pos.y, pos.z, 0.9);
-		colshape.clothingShopId = this.id;
-		
-		const Blip = mp.blips.new(73, new mp.Vector3(pos.x, pos.y, pos.z),
-		{	
-			name: `Clothing Shop`,
-			shortRange: true,
-			scale: 0.7,
-		});
+	setLocalSettings() {
+		this.buyerColshape.clothingShopId = this.id;
+		this.blip.model = 73;
+		this.blip.name = `Clothing shop`;
 	}
 
 	async buyCloth(player, d) {
@@ -37,13 +24,17 @@ class clothingShop extends business {
 		const shopTax = misc.roundNum(price * this.margin / 100);
 		const endPrice = price + shopTax;
 		const canBuy = await moneyAPI.changeMoney(player, -endPrice);
-		if (!canBuy) {
-			return player.notify("~r~Not enough cash!");
-		}
-		await misc.query(`UPDATE business SET balance = balance + '${shopTax}' WHERE id = ${this.id}`);
+		if (!canBuy) return;
+
+		await this.addMoneyToBalance(shopTax);
 		await clothes.saveClothes(player, d);
-		this.balance += shopTax;
-		player.notify("~g~Done!");
+
+		let doneText = "~g~Done!";
+		if (misc.getPlayerLang(player) === "rus") doneText = "~g~Готово!";
+		if (misc.getPlayerLang(player) === "ger") doneText = "~g~Erledigt!";
+		player.notify(doneText);
+
+
 		misc.log.debug(`${player.name} bought a cloth for $${endPrice}`);
 	}
 }
@@ -52,6 +43,7 @@ function createClothingShop(d) {
 	const shop = new clothingShop(d);
 	shop.createMainEntities();
 	shop.createSpecialEntities();
+	shop.setLocalSettings();
 	business.addNewBusinessToList(shop);
 }
 
@@ -72,7 +64,12 @@ mp.events.add(
 	"playerEnterColshape" : (player, colshape) => {
 		if(player.vehicle || !colshape.clothingShopId || !misc.isPlayerLoggedIn(player)) return;
 		player.info.canOpen.clothingShop = colshape.clothingShopId;
-		player.notify(`Press ~b~E ~s~to open Clothing Shop Menu`);
+
+		let enterText = `Press ~b~E ~s~to open Clothing Shop Menu`;
+		if (misc.getPlayerLang(player) === "rus") enterText = `Нажмите ~b~E ~s~для входа в меню магазина одежды`;
+		if (misc.getPlayerLang(player) === "ger") enterText = `Drücken Sie ~b~ E ~s~, um das Bekleidungsgeschäft zu öffnen`;
+
+		player.notify(enterText);
 	},
 	
 	"playerExitColshape" : (player, colshape) => {
@@ -114,8 +111,8 @@ function openBuyerMenu(player) {
 
 	let execute = str1 + str2 + str3 + cloth;
 	
-
-	player.call("cClothingShopShowMenu", [execute, shop.camData]);
+	const lang = misc.getPlayerLang(player);
+	player.call("cClothingShopShowMenu", [lang, execute, shop.camData]);
 	misc.log.debug(`${player.name} enter a clothing shop menu`);
 }	
 
@@ -133,11 +130,12 @@ mp.events.addCommand(
 			player.outputChatBox("!{#4caf50} Clothing shop successfully created!");
 		},	
 
-		'setcsbmenu' : async (player, id) => {
+		'setchbuyerstandcoord' : async (player, id) => {
 			if (player.info.adminLvl < 1) return;
 			const coord = misc.convertOBJToJSON(player.position, player.heading);
-			await misc.query(`UPDATE clothingshop SET buyerMenuCoord = '${coord}' WHERE id = ${id}`);
-			player.outputChatBox("!{#4caf50}Success!");
+			await misc.query(`UPDATE clothingshop SET buyerStandCoord = '${coord}' WHERE id = ${id}`);
+			player.notify("~g~Success!");
 		},	
+
 	}
 );

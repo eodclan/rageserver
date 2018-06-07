@@ -4,12 +4,6 @@ const misc = require('../sMisc');
 const time = require('./sTime');
 
 mp.events.add('playerChat', (player, message) => {
-	if (message === ")") {
-		return sayME(player, "is smiling");
-	}
-	if (message === "))") {
-		return sayME(player, "is laughing");
-	}
 	sayRP(player, message);
 	misc.log.debug(`${player.name}[${player.id}]: ${message}.`);
 });
@@ -19,14 +13,20 @@ function sayRP(player, text, anon = false) {
 		let dist = client.dist(player.position);
 		let color = getColorInRange("white", dist);
 		const currentTime = time.getTime();
+
+		let someoneText = "Someone";
+		if (misc.getPlayerLang(client) === "rus") someoneText = "Неизвестный";
+		if (misc.getPlayerLang(client) === "ger") someoneText = "Jemand";
+
 		if (anon) {
-			client.outputChatBox(`!{${color}}[${currentTime}] Someone: ${text}.`);
+			client.outputChatBox(`!{${color}}[${currentTime}] ${someoneText}: ${text}.`);
 		}
 		else {
 			client.outputChatBox(`!{${color}}[${currentTime}] ${player.name}[${player.id}]: ${text}.`);
 		}
 	});
 }
+module.exports.sayRP = sayRP;
 
 function getColorInRange(type, dist) {
 	let color;
@@ -88,8 +88,13 @@ function sayME(player, text, anon = false) {
 		let dist = client.dist(player.position);
 		let color = getColorInRange("purple", dist);
 		const currentTime = time.getTime();
+
+		let someoneText = "Someone";
+		if (misc.getPlayerLang(client) === "rus") someoneText = "Неизвестный";
+		if (misc.getPlayerLang(client) === "ger") someoneText = "Jemand";
+
 		if (anon) {
-			client.outputChatBox(`!{${color}}[${currentTime}] Someone: ${text}.`);
+			client.outputChatBox(`!{${color}}[${currentTime}] ${someoneText}: ${text}.`);
 		}
 		else {
 			client.outputChatBox(`!{${color}}[${currentTime}] ${player.name} ${text}.`);
@@ -97,6 +102,7 @@ function sayME(player, text, anon = false) {
 		misc.log.debug(`${player.name} ${text}.`);
 	});
 }
+module.exports.sayME = sayME;
 	
 function sayDO(player, text, anon = false) {
 	mp.players.forEachInRange(player.position, 10, (client) => {
@@ -112,3 +118,4 @@ function sayDO(player, text, anon = false) {
 		misc.log.debug(`${text} | ${player.name}.`);
 	});
 }
+module.exports.sayDO = sayDO;

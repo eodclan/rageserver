@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<link rel="stylesheet" href="character.css">
 	<body>
 		<div class="b1" id="app">
@@ -8,7 +8,7 @@
             <</div>
                <div class="fm-b_main">
                   {{ genderNames[gender] }}
-                  <p>Geschlecht</p>
+                  <p>gender</p>
                </div>
                <div class="fm-b_arrow" v-on:click="changeGender">></div>
          </div>
@@ -17,7 +17,7 @@
             <</div>
                <div class="fm-b_main">
                   {{ fatherNames[father] }}
-                  <p>Vater</p>
+                  <p>father</p>
                </div>
                <div class="fm-b_arrow" v-on:click="nextFather">></div>
          </div>
@@ -29,7 +29,7 @@
                <</div>
                   <div class="fm-b_main">
                      {{ motherNames[mother] }}
-                     <p>Mutter</p>
+                     <p>mother</p>
                   </div>
                   <div class="fm-b_arrow" v-on:click="nextMother">></div>
             </div>
@@ -38,17 +38,17 @@
             <div class="fm-b" style="margin-top: 10vh;">
                <div class="fm-b_main">
                   <input type="range" min="0" max="12" step="1" v-model="skinColor" v-on:input="changeAppearance">
-                  <p>Hautfarbe</p>
+                  <p>skin color</p>
                </div>
             </div>
             <div class="fm-b">
                <div class="fm-b_main">
                   <input type="range" min="90" max="270" step="5" v-model="camRotation" v-on:input="changeCamRotation">
-                  <p>Kamera Drehen</p>
+                  <p>cam rotation</p>
                </div>
             </div>
    
-            <div class="b1-title b1-done" v-on:click="done">Nächste Seite!</div>
+            <div class="b1-title b1-done" v-on:click="done">Next!</div>
          </div>   
 		  <script src="../vue.js"></script>
 	</body>
