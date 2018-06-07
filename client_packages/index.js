@@ -1,5 +1,6 @@
 require('./RP/cMisc.js');
 require('./RP/cKeys.js');
+require('./RP/cDoors.js');
 require('./RP/Basic/cLogin.js');
 require('./RP/Basic/cMoney.js');
 require('./RP/Basic/cVehicle.js');
