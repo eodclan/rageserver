@@ -1,5 +1,5 @@
 # rageserver
-Open source rage mp role play server
+German version of Open source role play server from MarkCavalli.
 
 Hello!
 All about this server you can read at:

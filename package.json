@@ -13,12 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarkCavalli/rageserver.git"
+    "url": "git+https://github.com/eodclan/rageserver.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MarkCavalli/rageserver/issues"
+    "url": "https://github.com/eodclan/rageserver/issues"
   },
-  "homepage": "https://github.com/MarkCavalli/rageserver#readme"
+  "homepage": "https://github.com/eodclan/rageserver#readme"
 }
+
