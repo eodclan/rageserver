@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 06 2018 г., 17:55
+-- Время создания: Июл 26 2018 г., 21:43
 -- Версия сервера: 5.7.20
 -- Версия PHP: 5.5.38
 
@@ -25,6 +25,17 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `barbershop`
+--
+
+CREATE TABLE `barbershop` (
+  `id` int(255) NOT NULL,
+  `camData` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `business`
 --
 
@@ -33,7 +44,7 @@ CREATE TABLE `business` (
   `title` varchar(255) NOT NULL,
   `coord` text NOT NULL,
   `price` int(11) NOT NULL,
-  `owner` varchar(255) DEFAULT NULL,
+  `ownerId` int(255) DEFAULT '0',
   `margin` int(11) DEFAULT '0',
   `balance` int(11) NOT NULL DEFAULT '0',
   `buyerMenuCoord` text
@@ -53,7 +64,7 @@ CREATE TABLE `cars` (
   `fuelTank` int(255) NOT NULL,
   `fuelRate` int(255) NOT NULL,
   `price` int(255) NOT NULL,
-  `owner` varchar(255) NOT NULL,
+  `ownerId` int(255) NOT NULL,
   `whoCanOpen` text NOT NULL,
   `primaryColor` text NOT NULL,
   `secondaryColor` text NOT NULL,
@@ -88,36 +99,73 @@ CREATE TABLE `clothingshop` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `users`
+-- Структура таблицы `faction`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `money` bigint(20) NOT NULL DEFAULT '0',
-  `bmoney` bigint(20) NOT NULL DEFAULT '0',
-  `tmoney` bigint(20) NOT NULL DEFAULT '0',
-  `position` text,
-  `dim` int(11) NOT NULL DEFAULT '0',
-  `signupdate` varchar(48) DEFAULT NULL,
-  `lastlogindate` varchar(48) DEFAULT NULL,
-  `adminlvl` tinyint(4) NOT NULL DEFAULT '0',
-  `hasBusiness` tinyint(1) NOT NULL DEFAULT '0',
-  `lang` varchar(3) NOT NULL DEFAULT 'ger'
+CREATE TABLE `faction` (
+  `id` int(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `rank` int(2) DEFAULT '0',
+  `info` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `userskins`
+-- Структура таблицы `gasstation`
 --
 
-CREATE TABLE `userskins` (
+CREATE TABLE `gasstation` (
   `id` int(11) NOT NULL,
-  `skin` int(11) NOT NULL DEFAULT '0',
-  `skindata` varchar(15) DEFAULT NULL,
-  `facedata` varchar(121) DEFAULT NULL,
+  `fillingCoord` text,
+  `camData` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `firstName` varchar(255) NOT NULL,
+  `lastName` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `ip` varchar(255) NOT NULL,
+  `regdate` varchar(255) NOT NULL,
+  `logdate` varchar(255) DEFAULT NULL,
+  `position` text,
+  `dim` int(255) NOT NULL DEFAULT '0',
+  `lang` varchar(10) NOT NULL DEFAULT 'eng',
+  `health` int(3) NOT NULL DEFAULT '100',
+  `adminlvl` int(2) NOT NULL DEFAULT '0',
+  `loyality` int(255) NOT NULL DEFAULT '0',
+  `socialclub` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `usersBody`
+--
+
+CREATE TABLE `usersBody` (
+  `id` int(255) NOT NULL,
+  `gender` varchar(1) DEFAULT NULL,
+  `skindata` text,
+  `facedata` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `usersClothes`
+--
+
+CREATE TABLE `usersClothes` (
+  `id` int(11) NOT NULL,
   `hats` text,
   `glasses` text,
   `tops` text,
@@ -125,9 +173,43 @@ CREATE TABLE `userskins` (
   `feet` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `usersHeadOverlay`
+--
+
+CREATE TABLE `usersHeadOverlay` (
+  `id` int(255) NOT NULL,
+  `hair` tinyint(2) NOT NULL,
+  `hairColor` text NOT NULL,
+  `brow` text NOT NULL,
+  `beard` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `usersMoney`
+--
+
+CREATE TABLE `usersMoney` (
+  `id` int(255) NOT NULL,
+  `cash` bigint(255) NOT NULL DEFAULT '1500',
+  `bank` bigint(255) NOT NULL DEFAULT '0',
+  `tax` bigint(255) NOT NULL DEFAULT '0',
+  `fines` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `barbershop`
+--
+ALTER TABLE `barbershop`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `business`
@@ -154,15 +236,45 @@ ALTER TABLE `clothingshop`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `faction`
+--
+ALTER TABLE `faction`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `gasstation`
+--
+ALTER TABLE `gasstation`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `userskins`
+-- Индексы таблицы `usersBody`
 --
-ALTER TABLE `userskins`
+ALTER TABLE `usersBody`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `usersClothes`
+--
+ALTER TABLE `usersClothes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `usersHeadOverlay`
+--
+ALTER TABLE `usersHeadOverlay`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `usersMoney`
+--
+ALTER TABLE `usersMoney`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -170,40 +282,76 @@ ALTER TABLE `userskins`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `barbershop`
+--
+ALTER TABLE `barbershop`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `business`
 --
 ALTER TABLE `business`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `cheapcardealership`
 --
 ALTER TABLE `cheapcardealership`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `clothingshop`
 --
 ALTER TABLE `clothingshop`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `faction`
+--
+ALTER TABLE `faction`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `gasstation`
+--
+ALTER TABLE `gasstation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `userskins`
+-- AUTO_INCREMENT для таблицы `usersBody`
 --
-ALTER TABLE `userskins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+ALTER TABLE `usersBody`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `usersClothes`
+--
+ALTER TABLE `usersClothes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `usersHeadOverlay`
+--
+ALTER TABLE `usersHeadOverlay`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `usersMoney`
+--
+ALTER TABLE `usersMoney`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
