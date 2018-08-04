@@ -138,7 +138,7 @@ CREATE TABLE `users` (
   `logdate` varchar(255) DEFAULT NULL,
   `position` text,
   `dim` int(255) NOT NULL DEFAULT '0',
-  `lang` varchar(10) NOT NULL DEFAULT 'eng',
+  `lang` varchar(10) NOT NULL DEFAULT 'ger',
   `health` int(3) NOT NULL DEFAULT '100',
   `adminlvl` int(2) NOT NULL DEFAULT '0',
   `loyality` int(255) NOT NULL DEFAULT '0',
