@@ -12,6 +12,7 @@ const vehicleAPI = require('./sVehicle');
 const faction = require('../Factions/sFaction');
 const hospital = require('../Factions/sHospital');
 const i18n = require('../sI18n');
+const prison = require('../Factions/Police/sPrison');
 
 
 class loginClass {
@@ -147,7 +148,8 @@ class loginClass {
         const q4 = clothes.insertNewUser();
         const q5 = faction.insertNewUser();
         const q6 = headOverlay.insertNewUser();
-        await Promise.all([q1, q2, q3, q4, q5, q6]);
+        const q7 = prison.insertNewUser();
+        await Promise.all([q1, q2, q3, q4, q5, q6, q7]);
 
         player.call("cInjectCef", [`app.showInfo('Success! Now you can log in.');`]);
         const mail = {
@@ -239,14 +241,19 @@ class loginClass {
         const q4 = faction.loadPlayerAccount(player);
         const q5 = headOverlay.loadPlayerHeadOverlay(player);
         const q6 = clothes.loadPlayerClothes(player);
-        await Promise.all([q1, q2, q3, q4, q5, q6]);
+        const q7 = prison.loadPlayerAccount(player);
+        await Promise.all([q1, q2, q3, q4, q5, q6, q7]);
         hospital.loadPlayerAccount(player);
-        player.outputChatBox(`${i18n.get('sLogin', 'annouceChooseLang', player.lang)}`);
         player.outputChatBox(`${i18n.get('sLogin', 'annouceSpawnVehicle', player.lang)}`);
         player.outputChatBox(`${i18n.get('sLogin', 'annouceGlobalChat', player.lang)}`);
         player.outputChatBox(`${i18n.get('sLogin', 'annouceOldUser', player.lang)}`);
+        player.outputChatBox(`${i18n.get('sLogin', 'annoucePlayerMenu', player.lang)}`);
         const onlinePlayers = mp.players.toArray();
-        if (onlinePlayers.length < 30) mp.players.broadcast(`[${time.getTime()}] ${player.name} ${i18n.get('sLogin', 'connected', player.lang)}`);
+        if (onlinePlayers.length < 30) {
+            for (let p of onlinePlayers) {
+                p.outputChatBox(`[${time.getTime()}] ${player.name} ${i18n.get('sLogin', 'connected', p.lang)}`);
+            }
+        }
     }
 
     async loadBasicData(player, id) {
@@ -275,8 +282,13 @@ class loginClass {
     saveAccount(player) {
         this.saveBasicData(player);
         vehicleAPI.savePlayerVehicles(player.basic.id);
+        prison.savePlayerAccount(player);
         const onlinePlayers = mp.players.toArray();
-        if (onlinePlayers.length < 30) mp.players.broadcast(`[${time.getTime()}] ${player.name} [${i18n.get('sLogin', 'disconnected', player.lang)}]`);
+        if (onlinePlayers.length < 30) {
+            for (let p of onlinePlayers) {
+                p.outputChatBox(`[${time.getTime()}] ${player.name} ${i18n.get('sLogin', 'disconnected', p.lang)}`);
+            }
+        }
         misc.log.debug(`${player.name} disconnected`);
     }
 

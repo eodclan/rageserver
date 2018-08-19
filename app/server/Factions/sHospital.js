@@ -310,9 +310,12 @@ class patientsClass {
 		mp.events.add({
 			"playerDeath" : (player, reason, killer) => {
 				setTimeout(() => {
+					if (!player) return;
 					this.playerDeath(player, reason, killer);
 				}, 10000);
-				misc.log.debug(`${player.name} death! Reason: ${reason}, killer: ${killer.name}`);
+				let killername;
+				if (killer) killername = killer.name;
+				misc.log.debug(`${player.name} death! Reason: ${reason}, killer: ${killername}`);
 			},
 		
 			"sKeys-E" : (player) => {
@@ -365,7 +368,7 @@ class patientsClass {
 
 	startHealingProcess(player) {
 		player.hospital.healing = true;
-		player.hospital.healingSpeed = 1;
+		player.hospital.healingSpeed = 25;
 		player.outputChatBox(`!{0, 200, 0}${i18n.get('sHospital', 'startedHealing', player.lang)}!`);
 		misc.log.debug(`${player.name} start healing. HP: ${player.health}`);
 	}

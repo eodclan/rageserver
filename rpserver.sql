@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июл 26 2018 г., 21:43
+-- Время создания: Авг 18 2018 г., 22:10
 -- Версия сервера: 5.7.20
 -- Версия PHP: 5.5.38
 
@@ -124,6 +124,19 @@ CREATE TABLE `gasstation` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `jail`
+--
+
+CREATE TABLE `jail` (
+  `id` int(255) NOT NULL,
+  `inside` tinyint(1) NOT NULL DEFAULT '0',
+  `time` int(255) NOT NULL DEFAULT '0',
+  `violations` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
@@ -195,7 +208,7 @@ CREATE TABLE `usersHeadOverlay` (
 
 CREATE TABLE `usersMoney` (
   `id` int(255) NOT NULL,
-  `cash` bigint(255) NOT NULL DEFAULT '1500',
+  `cash` bigint(255) NOT NULL DEFAULT '2500',
   `bank` bigint(255) NOT NULL DEFAULT '0',
   `tax` bigint(255) NOT NULL DEFAULT '0',
   `fines` text
@@ -245,6 +258,12 @@ ALTER TABLE `faction`
 -- Индексы таблицы `gasstation`
 --
 ALTER TABLE `gasstation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `jail`
+--
+ALTER TABLE `jail`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -322,6 +341,12 @@ ALTER TABLE `faction`
 --
 ALTER TABLE `gasstation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `jail`
+--
+ALTER TABLE `jail`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

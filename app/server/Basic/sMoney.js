@@ -121,7 +121,7 @@ class atmsClass{
 		this.createATM(237.314, 217.927, 106.287); // normal
 		this.createATM(236.522, 219.628, 106.287); // normal
 		this.createATM(285.476, 143.485, 104.173); // normal
-		this.createATM(356.883, 173.482, 103.069); // normal		
+		this.createATM(356.883, 173.482, 103.069); // normal	
 	}
 
 	updateATMInfo(player) {
@@ -191,6 +191,18 @@ class atmsClass{
 const atms = new atmsClass();
 atms.loadATMs();
 
+function getNearestATM(playerPosition) {
+	const atms = mp.blips.toArray();
+	let nearestATM = atms[0];
+	for (let atm of atms) {
+		if (atm.name !== "ATM") continue;
+		if (atm.dist(playerPosition) < nearestATM.dist(playerPosition)) {
+			nearestATM = atm;
+		}
+	}
+	return nearestATM.position;
+}
+module.exports.getNearestATM = getNearestATM;
 
 
 
@@ -272,6 +284,17 @@ class sMoney {
 
 }
 const money = new sMoney();
+
+
+
+mp.events.addCommand({	
+	'givecash' : (player, fullText, id, value) => {
+		if (misc.getAdminLvl(player) < 1) return;
+		money.changeMoney(mp.players.at(+id), +value);
+	},
+
+});
+
 
 
 

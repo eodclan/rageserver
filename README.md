@@ -1,11 +1,11 @@
 # rageserver
-Open source rage mp role play server
+Open source rage mp role play server - German Edition
 
 Hello!
 All about this server you can read at:
 https://rage.mp/forums/topic/1559-open-source-role-play-server/
 
-
+More ATMs in this german version
 
 
 # Installation guide:
@@ -28,11 +28,11 @@ const connection =  mysql.createPool({
 
 connection.getConnection(function(e) {
 	if (e) 	{
-		log.error("DATABASE IS NOT WORKING");
+		console.log("DATABASE IS NOT WORKING");
 		throw e;
 	}
 	else 	{
-		log.debug(`DATABASE IS WORKING`);
+		console.log(`DATABASE IS WORKING`);
 	}
 });
 
@@ -54,7 +54,8 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-//Setting mail's from address below.It is importent when smtp server need mail's from add the same as sender,or it will make smtp 501 error and let your gameserver crash.
+//Setting mail's from address below.It is importent when smtp server need mail's from add the same as sender,
+//or it will make smtp 501 error and let your gameserver crash.
 
 function getMailAdress() {
     return 'Open Source RP server <youmail@gmail.com>'; //Your server mail's "From" address content.
